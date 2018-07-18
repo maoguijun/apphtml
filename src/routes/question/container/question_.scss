@@ -1,0 +1,164 @@
+.questionfile {
+  font-family: PingFangSC-Medium;
+  .am-navbar-light {
+    background: #dec7a9;
+    padding-top: 0.05rem;
+    padding-bottom: 0.04rem;
+    span {
+      font-size: 0.05;
+      line-height: 0.04;
+      color: #fff;
+      letter-spacing: 0;
+    }
+  }
+  .am-steps {
+    background: #dec7a9;
+    padding-top: 0.03rem;
+    padding-bottom: 0.02rem;
+    .icon_step {
+      width: 0.06rem;
+      height: 0.06rem;
+      border-radius: 50%;
+      background: #ddd;
+      font-size: 0.03rem;
+      line-height: 0.06rem;
+      color: #fff;
+    }
+    .current {
+      background: #fff;
+      color: #d1c7a9;
+    }
+    .am-steps-item-finish .am-steps-item-tail:after {
+      background: #fff;
+    }
+  }
+  // 中间5个
+  .bar{
+    background: #f9f9fd;
+    overflow: hidden;
+    height:0.14rem;
+    .bar-item{
+      float: left;
+      width:0.2rem;
+      div{
+        box-sizing: border-box;
+        text-align: center;
+      }
+      div:first-child{
+        height:0.06rem;
+        padding-top:0.02rem;
+        color:#34373b;
+        font-size: 0.032rem;
+      }
+      div:nth-child(2){
+        height:0.02rem;
+        border-right: 1px solid #ccc;
+      }
+      div:last-child{
+        height:0.06rem;
+        color:#bdbdbd;
+        font-size: 0.029rem;
+        font-family: PingFangSC-Semibold;
+      }
+    }
+  }
+
+  // 内容
+  .container {
+    .title {
+      text-align: center;
+      margin-top: 0.1rem;
+      margin-bottom: 0.1rem;
+      div {
+        height: 0.05rem;
+        font-size: 0.05rem;
+        font-weight: normal;
+        font-stretch: normal;
+        line-height: 0.05rem;
+        letter-spacing: 0rem;
+        color: #34373b;
+        padding-bottom:0.01rem;
+      }
+      span{
+        font-size: 0.03rem;
+        font-weight: normal;
+        font-stretch: normal;
+        line-height: 0.06rem;
+        letter-spacing: 0rem;
+        color: #999999;
+      }
+    }
+    .littletitle {
+      width:0.74rem;
+      margin:0 auto;
+      font-size:0.04rem;
+      color:#666;
+      height:0.08rem;
+      div{
+        float: left;
+      }
+      .youselectitem{
+        color:#fff;
+        font-size: 0.03rem;
+        padding:0.02rem;
+        background: #b4b4b4;
+        float: left;
+        margin-left: 0.01rem;
+
+      }
+      .questioncontent{
+        margin-top:0.07rem;
+        color:#bababa;
+        font-size:0.035rem;
+        line-height: 0.048rem;
+      }
+    }
+
+
+  }
+  // 下面的button
+  .bottomButton{
+    position: fixed;
+    bottom: 0;
+    width:100%;
+    transition: all 0.3s;
+    z-index: 10;
+    font-size:0.045rem;
+    font-weight: normal;
+    font-stretch: normal;
+    .am-button{
+      border-radius: 0
+    }
+  }
+  .nofull{
+    .am-button{
+      width:0.932rem;
+      margin:0 auto;
+    }
+  }
+  .disabled{
+    bottom: -0.07rem;
+    transition: all 0.4s;
+  }
+}
+html {
+  .am-modal-transparent{
+    .am-modal-content{
+      border-radius: 0;
+      font-size: 0.04rem;
+      line-height: 0.04rem;
+      color:#333;
+      .am-modal-body{
+        margin-top: 0.04rem;
+        margin-bottom: 0.02rem;
+      }
+      .am-modal-footer{
+        .am-modal-button-group-v {
+          .am-modal-button{
+            font-size:0.04rem;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "plugins": [
+    ["import", { "libraryName": "antd-mobile", "style": true }],
+    ["react-intl", {
+      "messagesDir": "./dist/messages/"
+    }],
+    ["transform-runtime"]
+
+  ]
+}

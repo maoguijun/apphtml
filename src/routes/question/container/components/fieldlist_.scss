@@ -1,0 +1,37 @@
+.components_filedlist {
+  .fileList {
+    .fileitem {
+      position: relative;
+      .am-card {
+        width: 0.88rem;
+        height: 0.16rem;
+        min-height: 60px;
+        margin: 0 auto;
+        background: #ccc;
+        font-size: 0.04rem;
+        border-radius: 0;
+        margin-top: 0.02rem;
+      }
+      .icon{
+        visibility: hidden;
+        position: absolute;
+        right:0.04rem;
+        width:0.04rem;
+        top:-0.02rem;
+        z-index: 10;
+        color:#736b53;
+        height:0.04rem;
+        background: #fff;
+      }
+    }
+    .onselect {
+      .am-card {
+        border-color:#736b53;
+        background: #fff;
+      }
+      .icon{
+        visibility:visible;
+      }
+    }
+  }
+}

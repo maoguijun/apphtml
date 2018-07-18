@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,mBAAmB;EACjB,gBAAgB,EAAE,+BAAgC;EAClD,MAAM,EAAC,IAAI;EACX,eAAe,EAAC,IAAI",
+"sources": ["NotMatch.scss"],
+"names": [],
+"file": "NotMatch.css"
+}

@@ -1,0 +1,148 @@
+@import '../../styles/base';
+.layout-main{
+  .ant-layout-sider-collapsed{
+    .anticon {
+      font-size: 16px;
+    }
+    .nav-text {
+      display: none;
+    }
+    .ant-menu-submenu-vertical > .ant-menu-submenu-title:after {
+      display: none;
+    }
+    .logo{
+      display:none
+    }
+    .logout{
+      display:none
+    }
+    //.user-name{
+    //  padding:0 7px 0 5px;
+    //  overflow: hidden;
+    //  text-overflow: ellipsis;
+    //}
+  }
+  .logo {
+    height: 64px;
+    box-sizing: border-box;
+    //background: #333;
+    display: flex;
+    // justify-content: center;
+    background: #999;
+    margin:6px 10px;
+
+    overflow: hidden;
+    .word {
+      color:white;
+      margin:0 auto;
+      line-height:30px;
+      font-size:20px;
+      font-weight:bold;
+      text-align: center;
+    }
+  }
+  .sider-main{
+    overflow: hidden;
+    box-shadow: 2px 0 6px rgba(0,21,41,.35);
+    -webkit-box-shadow: 2px 0 6px rgba(0,21,41,.35);
+    -moz-box-shadow: 2px 0 6px rgba(0,21,41,.35) ;
+    min-height:100vh;
+    z-index:10;
+  }
+  .sider-main:hover{
+    overflow: auto
+  }
+  .ant-layout-sider{
+    background: #999
+  }
+}
+.sider-user{
+  text-align:center;
+  color:#ccc;
+  margin:50px 0 30px;
+}
+.ant-layout-sider-trigger{
+  background:#c4c2c2
+}
+.ant-menu-dark, .ant-menu-dark .ant-menu-sub{
+  background:#999;
+  // color:#fff
+}
+.ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected, .ant-menu.ant-menu-dark .ant-menu-item-selected{
+  background: #fff;
+  color:#333
+}
+.ant-menu-dark .ant-menu-inline.ant-menu-sub{
+  background: #999;
+  box-shadow: 0 2px 8px #999;
+  // color:#fff
+}
+.ant-menu-dark .ant-menu-item, .ant-menu-dark .ant-menu-item-group-title, .ant-menu-dark .ant-menu-item>a, .ant-menu-dark .ant-menu-submenu{
+  color:#fff
+}
+.ant-menu-dark .ant-menu-item :hover,
+.ant-menu-dark .ant-menu-item-group-title:hover,
+.ant-menu-dark .ant-menu-item:hover>*,
+.ant-menu-dark .ant-menu-submenu:hover,
+.ant-menu-dark .ant-menu-submenu-title:hover,
+.ant-menu-dark .ant-menu-submenu .ant-menu-item:hover{
+  color:#333
+}
+.sider-main{
+  //background-color: #404040;
+  //position: fixed;
+  min-height: 100%;
+  overflow: auto;
+  overflow-x:hidden;
+  &::-webkit-scrollbar {
+    width: 14px;
+    height: 14px;
+  }
+
+  &::-webkit-scrollbar-track{
+    border-radius: 999px;
+    border: 5px solid transparent;
+    background: #999;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    border: 5px solid transparent;
+    background: #999;
+  }
+
+  &::-webkit-scrollbar-track {
+    box-shadow: 1px 1px 5px rgba(0,0,0,.2) inset;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    min-height: 20px;
+    background-clip: content-box;
+    box-shadow: 0 0 0 5px rgba(0,0,0,.2) inset;
+  }
+
+  &::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+  .divider{
+    margin:10px 0;
+    height: 0;
+    border-right:0;
+    border-top:#999 solid 1px;
+    // border-bottom:#999 solid 1px;
+  }
+  .ant-menu.ant-menu-vertical{
+    .ant-menu-item-selected{
+      background-color: rgba($primary,0.5);
+    }
+  }
+}
+
+.content{
+  min-height: 100%;
+  background: rgb(240, 242, 245);
+  padding: 88px 24px 32px;
+  .content-wrap{
+  }
+}
+
+
