@@ -20,7 +20,24 @@ const language = {
   questioncorrect: '答对',
   questionerror: '答错',
   timerest: '时长',
-  correctrate: '正确率'
+  correctrate: '正确率',
+  questionfromfield: '题目来源',
+  backToApp: '离开',
+  ok_btn: '确定',
+  pre_question: '上一题',
+  next_question: '下一题',
+  questionAlertmessage: '请先选择您认为正确的答案',
+  checkresult: '查看结果',
+  canceltest: '取消测试',
+  continuetest: '继续测试',
+  saveandleave: '保存离开',
+  continuesee: '继续浏览',
+  questionbackAlertmessage1: `现在取消您将无法获得定制课程推荐
+  确定要离开吗？`,
+  questionbackAlertmessage2: `距离获得定制课程推荐只有一步了，
+  您确定要现在退出吗！
+  `,
+  questionbackAlertmessage2tip: '（下次进行测试时可以看到前一次成绩）'
 }
 
 export default language

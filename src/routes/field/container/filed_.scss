@@ -111,24 +111,4 @@
     transition: all 0.4s;
   }
 }
-html {
-  .am-modal-transparent{
-    .am-modal-content{
-      border-radius: 0;
-      font-size: 0.04rem;
-      line-height: 0.04rem;
-      color:#333;
-      .am-modal-body{
-        margin-top: 0.04rem;
-        margin-bottom: 0.02rem;
-      }
-      .am-modal-footer{
-        .am-modal-button-group-v {
-          .am-modal-button{
-            font-size:0.04rem;
-          }
-        }
-      }
-    }
-  }
-}
+

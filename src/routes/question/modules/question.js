@@ -3,10 +3,7 @@ import { easyfetch } from '../../../utils/FetchHelper'
 import { host } from '../../../config'
 
 export const FETCH_QUESTION = 'FETCH_QUESTION'
-export const NEW_QUESTION = 'NEW_QUESTION'
-export const OPERATION_TEACHER = 'OPERATION_TEACHER'
-export const ALT_TEACHER = 'ALT_TEACHER'
-export const FETCH_TEACHER_INFO = 'FETCH_TEACHER_INFO'
+export const NEW_RESULT = 'NEW_RESULT'
 
 export const fetchQuestion = (json, language) => {
   return (dispatch, getState) => {
@@ -14,6 +11,18 @@ export const fetchQuestion = (json, language) => {
       .then(e => {
         return dispatch({
           type: FETCH_QUESTION,
+          payload: e
+        })
+      })
+      .catch(e => ({ error: e }))
+  }
+}
+export const newResult = json => {
+  return (dispatch, getState) => {
+    return easyfetch(host, '/s/stuInterestFields', 'post', json)
+      .then(e => {
+        return dispatch({
+          type: NEW_RESULT,
           payload: e
         })
       })

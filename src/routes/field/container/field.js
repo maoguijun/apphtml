@@ -2,7 +2,7 @@
  * @Author: Mao Guijun
  * @Date: 2018-07-18 11:30:06
  * @Last Modified by: Mao Guijun
- * @Last Modified time: 2018-07-18 18:42:52
+ * @Last Modified time: 2018-07-19 20:01:29
  */
 import React, { PureComponent } from 'react'
 import { injectIntl } from 'react-intl'
@@ -78,7 +78,7 @@ class Field extends React.Component {
       // 判断是否已经有三个了
       if (selectList.length > 2) {
         setTimeout(
-          () => alert('', formatMessage({ id: 'fieldAlertmessage' }), [{ text: formatMessage({ id: 'Iget' }) }]),
+          () => alert(formatMessage({ id: 'fieldAlertmessage' }), '', [{ text: formatMessage({ id: 'Iget' }) }]),
           100
         )
       } else {

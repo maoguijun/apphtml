@@ -2,31 +2,35 @@
  * @Author: Mao Guijun
  * @Date: 2018-07-18 11:30:06
  * @Last Modified by: Mao Guijun
- * @Last Modified time: 2018-07-18 19:43:18
+ * @Last Modified time: 2018-07-19 20:56:27
  */
 import React, { PureComponent } from 'react'
 import { injectIntl } from 'react-intl'
 import { connect } from 'react-redux'
 import { pathJump } from '../../../utils/'
-import { titles as _tit, rootPath, tableAll } from '../../../config'
+import { titles as _tit, rootPath, tableAll, locale } from '../../../config'
 import Immutable from 'immutable'
-import { fetchQuestion } from '../modules/question'
-import { NavBar, Icon, Steps, WingBlank, WhiteSpace, Toast, Modal, Button } from 'antd-mobile'
+import { fetchQuestion, newResult } from '../modules/question'
+import { NavBar, Icon, Steps, WingBlank, WhiteSpace, Toast, Modal, Button, Checkbox } from 'antd-mobile'
 import './question_.scss'
 import { login } from '../../Login/modules/login'
-import { encryptAes, encryptSha256 } from '../../../utils/common'
+import { encryptAes, encryptSha256, formatSecondToMinute } from '../../../utils/common'
+import * as _ from 'lodash'
 // import QuestionList from './components/questionlist'
 const Step = Steps.Step
 const alert = Modal.alert
+const CheckboxItem = Checkbox.CheckboxItem
 
 class Question extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
       currentStep: 1,
-      questionList: [],
-      selectList: [],
-      toStart: true // 是否点了下一步
+      questionList: Immutable.fromJS([]), // 所有的题目
+      correctList: Immutable.fromJS([]), // 正确的题目
+      errorList: Immutable.fromJS([]), // 错误的题目
+      Indexquestion: 0, // 当前显示的题目的index
+      timerest: 600
     }
   }
 
@@ -60,11 +64,216 @@ class Question extends React.Component {
       }
       console.log(57, e)
       this.setState({
-        questionList: e.payload.objs
+        questionList: Immutable.fromJS(e.payload.objs)
       })
     })
+    this.time = setInterval(() => {
+      const { timerest } = this.state
+      if (timerest < 1) {
+        clearInterval(this.time)
+        return
+      }
+      this.setState({
+        timerest: timerest - 1
+      })
+    }, 1000)
   }
 
+  componentWillUnmount () {
+    clearInterval(this.time)
+  }
+
+  componentDidUpdate (prevProps, prevState) {
+    const { questionList, Indexquestion } = this.state
+    questionList.getIn([`${Indexquestion}`, 'choQueOptions']) &&
+      questionList.getIn([`${Indexquestion}`, 'choQueOptions']).forEach(item => {
+        const id = document.getElementById(`selectitem_${item.get('id')}`)
+        if (id) {
+          id.innerHTML = locale === 'en' ? item.get('options_en') : item.get('options_zh')
+        }
+      })
+  }
+
+  onChange = id => {
+    let { questionList, Indexquestion } = this.state
+    // 如果已经提交过的就不能再改了
+    if (questionList.getIn([`${Indexquestion}`, 'isSelected'])) {
+      return
+    }
+    // 这里 用来修改userselect
+    let questionList_ = questionList.toJS()
+    if (questionList_[Indexquestion].choQueOptions) {
+      questionList_[Indexquestion].choQueOptions = questionList_[Indexquestion].choQueOptions.map(item => {
+        if (item.id === id) {
+          item = {
+            ...item,
+            userselect: !item.userselect
+          }
+        }
+        return item
+      })
+    }
+    console.log(91, questionList_)
+    this.setState({
+      questionList: Immutable.fromJS(questionList_)
+    })
+  }
+  getStatus = item => {
+    const { questionList, Indexquestion } = this.state
+    if (!questionList.getIn([`${Indexquestion}`, 'isSelected'])) {
+      if (item.get('userselect')) {
+        return 'correct'
+      }
+      return ''
+    }
+    if (questionList.getIn([`${Indexquestion}`, 'isSelected'])) {
+      if (item.get('answer')) {
+        return 'correct'
+      }
+      if (!item.get('answer')) {
+        if (item.get('userselect')) {
+          return 'error'
+        }
+        return ''
+      }
+      if (!!item.get('answer') === item.get('userselect')) {
+        return 'correct'
+      }
+      return 'error'
+    }
+  }
+  /** 点击确定 主要用来修改isSelected */
+  answerCurrent = () => {
+    const { questionList, Indexquestion, correctList, errorList } = this.state
+    const {
+      intl: { formatMessage }
+    } = this.props
+    let correctList_ = correctList.toJS()
+    let errorList_ = errorList.toJS()
+    let questionList_ = questionList.toJS()
+    if (!questionList_[Indexquestion] || !questionList_[Indexquestion].choQueOptions) {
+      return
+    }
+    if (questionList_[Indexquestion].choQueOptions.every(item => !item.userselect)) {
+      setTimeout(
+        () => alert(formatMessage({ id: 'questionAlertmessage' }), '', [{ text: formatMessage({ id: 'Iget' }) }]),
+        100
+      )
+      return
+    }
+    let asw = ''
+    questionList_[Indexquestion].choQueOptions.forEach(item => {
+      if (item.userselect) {
+        asw += item.name
+      }
+    })
+    questionList_[Indexquestion].isSelected = true
+    if (asw === questionList_[Indexquestion].answer) {
+      questionList_[Indexquestion].isCorrect = true
+      correctList_.push(questionList_[Indexquestion])
+    } else {
+      questionList_[Indexquestion].isCorrect = false
+      errorList_.push(questionList_[Indexquestion])
+    }
+    this.setState({
+      questionList: Immutable.fromJS(questionList_),
+      correctList: Immutable.fromJS(correctList_),
+      errorList: Immutable.fromJS(errorList_)
+    })
+  }
+  /** 保存成绩 */
+  saveResult = (cb, e) => {
+    const { dispatch } = this.props
+    const { questionList, correctList, errorList } = this.state
+    let questionList_ = questionList.toJS()
+    const obj = _.groupBy(questionList_, 'interestFieldId')
+    let arr = []
+    Object.keys(obj).forEach(key => {
+      let count = 0
+      console.log(193, obj, obj[key])
+      obj[key].forEach(item => {
+        if (item.isCorrect) {
+          count++
+        }
+      })
+      arr.push({
+        interestFieldId: key,
+        correctRate: parseFloat(count / obj[key].length).toFixed(2)
+      })
+    })
+    const json = {
+      stuInterestFields: arr
+    }
+    console.log(206, json)
+    dispatch(newResult(json)).then(e => {
+      if (e.error) {
+        console.log(e.error)
+        return
+      }
+      if (cb) {
+        if (e) {
+          if (window.originalPostMessage) {
+            window.postMessage(100)
+          } else {
+            throw Error('postMessage接口还未注入')
+          }
+        }
+        cb()
+      }
+    })
+  }
+  /** 点击查看结果 */
+  jumpToResult = () => {
+    const { questionList, correctList, errorList } = this.state
+    const { dispatch } = this.props
+    this.saveResult()
+  }
+  /** 点击离开 */
+  backToApp = () => {
+    const { Indexquestion, questionList } = this.state
+    const {
+      intl: { formatMessage }
+    } = this.props
+    if (questionList.getIn([`${questionList.size - 1}`, 'isSelected'])) {
+      setTimeout(
+        () =>
+          alert(
+            formatMessage({ id: 'questionbackAlertmessage2' }),
+            formatMessage({ id: 'questionbackAlertmessage2tip' }),
+            [
+              {
+                text: formatMessage({ id: 'saveandleave' }),
+                onPress: e => {
+                  this.saveResult(window.postMessage, e)
+                }
+              },
+              {
+                text: formatMessage({ id: 'continuesee' })
+              }
+            ]
+          ),
+        100
+      )
+    } else {
+      setTimeout(
+        () =>
+          alert(formatMessage({ id: 'questionbackAlertmessage1' }), '', [
+            {
+              text: formatMessage({ id: 'canceltest' }),
+              onPress: () => {
+                if (window.originalPostMessage) {
+                  window.postMessage(100)
+                } else {
+                  throw Error('postMessage接口还未注入')
+                }
+              }
+            },
+            { text: formatMessage({ id: 'continuetest' }) }
+          ]),
+        100
+      )
+    }
+  }
   render () {
     const {
       intl: { formatMessage, locale },
@@ -72,14 +281,17 @@ class Question extends React.Component {
       count,
       question
     } = this.props
-    let { sortedInfo, filteredInfo, loading, currentPage, currentStep, questionList, selectList, toStart } = this.state
+    let { currentStep, Indexquestion, questionList, correctList, errorList, timerest } = this.state
 
     return (
       <div className='questionfile'>
         <NavBar
           mode='light'
-          icon={<Icon type='left' />}
-          onLeftClick={() => console.log('onLeftClick')}
+          icon={<Icon onClick={() => console.log('back')} type='left' />}
+          leftContent={<span>{formatMessage({ id: 'backToApp' })}</span>}
+          onLeftClick={() => {
+            this.backToApp()
+          }}
           // rightContent={[
           //   <Icon key='0' type='search' style={{ marginRight: '16px' }} />,
           //   <Icon key='1' type='ellipsis' />
@@ -96,27 +308,30 @@ class Question extends React.Component {
         </div>
         <div className='bar'>
           <div className='bar-item'>
-            <div>{12}</div>
+            <div>{parseInt(questionList.size - correctList.size - errorList.size)}</div>
             <div />
             <div>{formatMessage({ id: 'questionrest' })}</div>
           </div>
           <div className='bar-item'>
-            <div>{5}</div>
+            <div>{parseInt(correctList.size)}</div>
             <div />
             <div>{formatMessage({ id: 'questioncorrect' })}</div>
           </div>
           <div className='bar-item'>
-            <div>{1}</div>
+            <div>{parseInt(errorList.size)}</div>
             <div />
             <div>{formatMessage({ id: 'questionerror' })}</div>
           </div>
           <div className='bar-item'>
-            <div>{12}</div>
+            <div>{formatSecondToMinute(timerest)}</div>
             <div />
             <div>{formatMessage({ id: 'timerest' })}</div>
           </div>
           <div className='bar-item'>
-            <div>{12}</div>
+            <div>
+              {parseInt((correctList.size / questionList.size) * 100)}
+              {'%'}
+            </div>
             <div />
             <div>{formatMessage({ id: 'correctrate' })}</div>
           </div>
@@ -124,21 +339,127 @@ class Question extends React.Component {
         <div>
           <div className='container'>
             <div className='title'>
-              <div>{formatMessage({ id: 'testforquestion' })}</div>
-              <span>{formatMessage({ id: 'testtips' })}</span>
-            </div>
-            <div className='littletitle'>
-              <div style={{ marginRight: '0.05rem', lineHeight: '0.08rem' }}>
-                {formatMessage({ id: 'youselectquestion' })}
+              <span style={{ paddingRight: '0.01rem' }}>
+                {formatMessage({ id: 'questionfromfield' })}
                 {':'}
-              </div>
+              </span>
+              <span>
+                {locale === 'en'
+                  ? questionList.getIn([`${Indexquestion}`, 'interestField', 'name_en'])
+                  : questionList.getIn([`${Indexquestion}`, 'interestField', 'name_zh'])}
+              </span>
+            </div>
+            <div className='questionTitle'>
+              {Indexquestion + 1 + '. '}
+              {locale === 'en'
+                ? questionList.getIn([`${Indexquestion}`, 'content_en'])
+                : questionList.getIn([`${Indexquestion}`, 'content_zh'])}
+            </div>
+            <div className='questionSeleter'>
+              {questionList.getIn([`${Indexquestion}`, 'choQueOptions']) &&
+                questionList.getIn([`${Indexquestion}`, 'choQueOptions']).map(item => {
+                  const status = this.getStatus(item)
+                  return (
+                    <div
+                      className={'questionItem' + ' ' + status}
+                      key={item.get('id')}
+                      onTouchStart={e => {
+                        this.onChange(item.get('id'))
+                      }}
+                    >
+                      {/* {!questionList.getIn([`${Indexquestion}`, 'isSelected']) && (
+                        <div className='checkbox'>
+                          {item.get('userselect') ? <i className='iconfont'>&#xe744;</i> : <i>{''}</i>}
+                          <span>{item.get('name')}</span>
+                        </div>
+                      )}
+                      {questionList.getIn([`${Indexquestion}`, 'isSelected']) && (
+                        <div className='checkbox'>
+                          {item.get('answer') ? (
+                            !!item.get('answer') === item.get('userselect') ? (
+                              <i className='iconfont'>&#xe744;</i>
+                            ) : (
+                              <i className='iconfont'>&#xe7ca;</i>
+                            )
+                          ) : (
+                            <i>{''}</i>
+                          )}
+                          <span>{item.get('name')}</span>
+                          </div>
+                        )} */}
+                      {!status ? (
+                        <div className='checkbox'>
+                          <i>{''}</i>
+                          <span>{item.get('name')}</span>
+                        </div>
+                      ) : status === 'correct' ? (
+                        <div className='checkbox'>
+                          <i className='iconfont'>&#xe744;</i>
+                          <span>{item.get('name')}</span>
+                        </div>
+                      ) : (
+                        <div className='checkbox'>
+                          <i className='iconfont'>&#xe7ca;</i>
+                          <span>{item.get('name')}</span>
+                        </div>
+                      )}
+                      <div id={`selectitem_${item.get('id')}`} />
+                    </div>
+                  )
+                })}
             </div>
           </div>
-          <div className={'bottomButton nofull'}>
-            <Button type='primary' onClick={() => this.jump()}>
-              {formatMessage({ id: 'startTest' })}
-            </Button>
-          </div>
+          {!questionList.getIn([`${Indexquestion}`, 'isSelected']) && (
+            <div className={'bottomButton nofull'}>
+              <Button type='primary' onClick={() => this.answerCurrent()}>
+                {formatMessage({ id: 'ok_btn' })}
+              </Button>
+            </div>
+          )}
+          {questionList.getIn([`${Indexquestion}`, 'isSelected']) && (
+            <div className={'bottomButton twoinline'}>
+              <div className='onebtn'>
+                <Button
+                  onClick={() => {
+                    if (Indexquestion < 1) {
+                      return
+                    }
+                    this.setState({
+                      Indexquestion: Indexquestion - 1
+                    })
+                  }}
+                >
+                  <Icon type='left' />
+                  {formatMessage({ id: 'pre_question' })}
+                </Button>
+              </div>
+              {Indexquestion < questionList.size - 1 ? (
+                <div className='onebtn'>
+                  <Button
+                    onClick={() => {
+                      this.setState({
+                        Indexquestion: Indexquestion + 1
+                      })
+                    }}
+                  >
+                    {formatMessage({ id: 'next_question' })}
+                    <Icon type='right' />
+                  </Button>
+                </div>
+              ) : (
+                <div className='onebtn'>
+                  <Button
+                    onClick={() => {
+                      this.jumpToResult()
+                    }}
+                  >
+                    {formatMessage({ id: 'checkresult' })}
+                    <Icon type='right' />
+                  </Button>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     )

@@ -12,6 +12,7 @@ import { secondRouter } from '../config'
 // import { Modal, Button, message } from 'antd'
 import { pathJump } from '../utils/'
 import '../styles/core.scss'
+import '../styles/alifont/iconfont.css'
 import moment from 'moment'
 // import { fetchUserInfo } from '../routes/Login/modules/login'
 moment.locale('zh')

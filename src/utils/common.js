@@ -25,3 +25,20 @@ exports.encryptSha256 = data => {
 
   return enc
 }
+
+export const formatSecondToMinute = value => {
+  if (!value) {
+    return '00:00'
+  }
+  let arr = [parseInt(value / 60), parseInt(value % 60)]
+  if (arr.every(i => !i)) {
+    return '00:00'
+  }
+  arr = arr.map(i => {
+    if (i < 10) {
+      i = `0${i}`
+    }
+    return `${i}`
+  })
+  return arr.join(':')
+}
