@@ -3,6 +3,7 @@ import { rootPath, chilPath, secondRouter } from '../config'
 import { requireAuth } from '../components/authentication/requireAuth'
 import Field from './field'
 import Question from './question'
+import Result from './result'
 
 export const createRoutes = store => ({
   path: rootPath.base,
@@ -16,7 +17,7 @@ export const createRoutes = store => ({
   childRoutes: [
     {
       // component: requireAuth(Layout),
-      childRoutes: [Field(store), Question(store)]
+      childRoutes: [Field(store), Question(store), Result(store)]
     }
   ]
 })

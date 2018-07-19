@@ -26,7 +26,8 @@ let _rootPath = {
   login: '/login',
 
   field: '/field',
-  question: '/question'
+  question: '/question',
+  result:'/result'
 }
 
 for (let k in _rootPath) {
