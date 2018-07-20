@@ -58,6 +58,10 @@ export const toFixed = (num, d) => {
   if (count < 0) {
     count = 0
   }
+  // count === 0 就直接跳出来，不要做循环
+  if (count === 0) {
+    return arr.join('')
+  }
   for (let i = 0; i < count; i++) {
     arr.unshift('0')
   }
