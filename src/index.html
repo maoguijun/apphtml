@@ -36,7 +36,11 @@
     (function () {
       var currClientHeight = document.documentElement.clientHeight
       console.log(38, currClientHeight)
-      document.getElementById('root').style.height = currClientHeight + 'px'
+      if (currClientHeight < 812) {
+        currClientHeight = 812
+      }
+      console.log(42, document.getElementById('root').style)
+      document.getElementById('root').style.minHeight = currClientHeight + 'px'
     })()
   </script>
 </body>

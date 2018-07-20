@@ -2,13 +2,13 @@
  * @Author: Mao Guijun
  * @Date: 2018-07-18 11:30:06
  * @Last Modified by: Mao Guijun
- * @Last Modified time: 2018-07-19 20:56:27
+ * @Last Modified time: 2018-07-20 14:07:36
  */
 import React, { PureComponent } from 'react'
 import { injectIntl } from 'react-intl'
 import { connect } from 'react-redux'
 import { pathJump } from '../../../utils/'
-import { titles as _tit, rootPath, tableAll, locale } from '../../../config'
+import { titles as _tit, rootPath, tableAll, locale, timetest } from '../../../config'
 import Immutable from 'immutable'
 import { fetchQuestion, newResult } from '../modules/question'
 import { NavBar, Icon, Steps, WingBlank, WhiteSpace, Toast, Modal, Button, Checkbox } from 'antd-mobile'
@@ -30,7 +30,7 @@ class Question extends React.Component {
       correctList: Immutable.fromJS([]), // 正确的题目
       errorList: Immutable.fromJS([]), // 错误的题目
       Indexquestion: 0, // 当前显示的题目的index
-      timerest: 600
+      timerest: timetest
     }
   }
 
@@ -184,10 +184,11 @@ class Question extends React.Component {
   /** 保存成绩 */
   saveResult = (cb, e) => {
     const { dispatch } = this.props
-    const { questionList, correctList, errorList } = this.state
+    const { questionList, correctList, errorList, timerest } = this.state
     let questionList_ = questionList.toJS()
     const obj = _.groupBy(questionList_, 'interestFieldId')
-    let arr = []
+    let arr = [] // 发送到后端的数据
+    let session = { arr: [] }
     Object.keys(obj).forEach(key => {
       let count = 0
       console.log(193, obj, obj[key])
@@ -200,10 +201,23 @@ class Question extends React.Component {
         interestFieldId: key,
         correctRate: parseFloat(count / obj[key].length).toFixed(2)
       })
+      session.arr.push({
+        interestField: obj[key][0].interestField,
+        correctRate: parseInt((count / obj[key].length) * 100)
+      })
     })
     const json = {
       stuInterestFields: arr
     }
+    session = {
+      ...session,
+      allCorrectRate: parseInt((correctList.size / questionList.size) * 100),
+      correctsize: correctList.size,
+      errorsize: errorList.size,
+      testingtime: timetest - timerest
+    }
+    console.log(session)
+    localStorage.setItem('testresult', JSON.stringify(session))
     console.log(206, json)
     dispatch(newResult(json)).then(e => {
       if (e.error) {
@@ -226,7 +240,7 @@ class Question extends React.Component {
   jumpToResult = () => {
     const { questionList, correctList, errorList } = this.state
     const { dispatch } = this.props
-    this.saveResult()
+    this.saveResult(dispatch(pathJump(rootPath.result)))
   }
   /** 点击离开 */
   backToApp = () => {

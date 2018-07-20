@@ -8,6 +8,7 @@ export const AESKey = 'AGtJxHXhSqNdwKo0Tb3VOfEgYnp2DrLI'
 export const picURL = '//ossyoupluselearning.businesstrainingshpwc.cn/' // 线上正式url
 export const tableLimit = 20
 export const tableAll = 99999
+export const timetest = 600 // 测试时长
 exports.host = '/api'
 exports.serverurl = '/api'
 exports.fetchState = {
@@ -27,7 +28,7 @@ let _rootPath = {
 
   field: '/field',
   question: '/question',
-  result:'/result'
+  result: '/result'
 }
 
 for (let k in _rootPath) {

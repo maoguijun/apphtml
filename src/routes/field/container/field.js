@@ -2,7 +2,7 @@
  * @Author: Mao Guijun
  * @Date: 2018-07-18 11:30:06
  * @Last Modified by: Mao Guijun
- * @Last Modified time: 2018-07-19 20:01:29
+ * @Last Modified time: 2018-07-20 15:30:23
  */
 import React, { PureComponent } from 'react'
 import { injectIntl } from 'react-intl'
@@ -103,6 +103,31 @@ class Field extends React.Component {
     console.log(string)
     dispatch(pathJump(`${rootPath.question}?${string}`))
   }
+  /** 点击离开 */
+  backToApp = () => {
+    const { Indexquestion, questionList } = this.state
+    const {
+      intl: { formatMessage }
+    } = this.props
+
+    setTimeout(
+      () =>
+        alert(formatMessage({ id: 'questionbackAlertmessage1' }), '', [
+          {
+            text: formatMessage({ id: 'canceltest' }),
+            onPress: () => {
+              if (window.originalPostMessage) {
+                window.postMessage(100)
+              } else {
+                throw Error('postMessage接口还未注入')
+              }
+            }
+          },
+          { text: formatMessage({ id: 'continuetest' }) }
+        ]),
+      100
+    )
+  }
   render () {
     const {
       intl: { formatMessage, locale },
@@ -116,6 +141,11 @@ class Field extends React.Component {
       <div className='fieldfile'>
         <NavBar
           mode='light'
+          icon={<Icon onClick={() => console.log('back')} type='left' />}
+          leftContent={<span>{formatMessage({ id: 'backToApp' })}</span>}
+          onLeftClick={() => {
+            this.backToApp()
+          }}
           // icon={<Icon type='left' />}
           // onLeftClick={() => console.log('onLeftClick')}
           // rightContent={[

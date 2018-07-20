@@ -2,7 +2,7 @@
  * @Author: Mao Guijun
  * @Date: 2018-07-18 11:30:06
  * @Last Modified by: Mao Guijun
- * @Last Modified time: 2018-07-19 20:01:29
+ * @Last Modified time: 2018-07-20 15:02:31
  */
 import React, { PureComponent } from 'react'
 import { injectIntl } from 'react-intl'
@@ -21,7 +21,7 @@ import { fetchResult } from '../modules/result'
 import { NavBar, Icon, Steps, WingBlank, WhiteSpace, Toast, Modal, Button } from 'antd-mobile'
 import './result_.scss'
 import { login } from '../../Login/modules/login'
-import { encryptAes, encryptSha256 } from '../../../utils/common'
+import { encryptAes, encryptSha256, formatSecondToMinute } from '../../../utils/common'
 // import ResultList from './components/resultlist'
 const Step = Steps.Step
 const alert = Modal.alert
@@ -31,38 +31,22 @@ class Result extends React.Component {
     super(props)
     this.state = {
       currentStep: 3,
-      resultList: [],
-      selectList: [],
-      toStart: false // 是否点了下一步
+      result: Immutable.fromJS({})
     }
   }
 
-  // // WARNING! To be deprecated in React v17. Use componentDidMount instead.
-  // componentWillMount () {
-  //   const { dispatch } = this.props
-  //   const json = {
-  //     mail: '1053475583@qq.com',
-  //     password: encryptAes(`${encryptSha256('Qwerty1.')},${new Date().getTime()}`),
-  //     type: '3',
-  //     equipmentType: '2'
-  //   }
-  //   dispatch(login(json))
-  // }
-
-  // componentDidMount () {
-  //   const { dispatch } = this.props
-  //   dispatch(fetchResult({ limit: tableAll })).then(e => {
-  //     if (e.error) {
-  //       console.log(e.error)
-  //       // Toast.info(e.error, 1)
-  //       return
-  //     }
-  //     console.log(57, e)
-  //     this.setState({
-  //       resultList: e.payload.objs
-  //     })
-  //   })
-  // }
+  // WARNING! To be deprecated in React v17. Use componentDidMount instead.
+  componentWillMount () {
+    const result = JSON.parse(localStorage.getItem('testresult') || null)
+    console.log(result)
+    if (result) {
+      this.setState({
+        result: Immutable.fromJS(result)
+      })
+    } else {
+      throw new Error('没有获取到考试结果！')
+    }
+  }
   /** 点击item */
   onItemChange = obj => {
     let { selectList } = this.state
@@ -89,41 +73,87 @@ class Result extends React.Component {
       selectList
     })
   }
-  jump = () => {
-    const { selectList } = this.state
-    const { dispatch } = this.props
-    let string = ''
-    const len = selectList.length
-    selectList.forEach(({ id }, index) => {
-      string += id
-      if (index < len) {
-        string += ','
-      }
-    })
-    console.log(string)
-    dispatch(pathJump(`${rootPath.question}?${string}`))
+  backToApp = () => {
+    const {
+      intl: { formatMessage }
+    } = this.props
+    setTimeout(
+      () =>
+        alert(
+          formatMessage({ id: 'questionbackAlertmessage2' }),
+          formatMessage({ id: 'questionbackAlertmessage2tip' }),
+          [
+            {
+              text: formatMessage({ id: 'saveandleave' }),
+              onPress: e => {
+                if (window.originalPostMessage) {
+                  window.postMessage(100)
+                } else {
+                  throw Error('postMessage接口还未注入')
+                }
+              }
+            },
+            {
+              text: formatMessage({ id: 'continuesee' })
+            }
+          ]
+        ),
+      100
+    )
+  }
+  renderfield = () => {
+    const { result } = this.state
+    const {
+      location: { locale }
+    } = this.props
+    const result_ = result.toJS()
+    return (
+      result_.arr &&
+      result_.arr.map((item, index, array) => {
+        let style = {}
+        if (index !== 0) {
+          style = {
+            borderLeft: '1px solid #ccc'
+          }
+        }
+        style = {
+          ...style,
+          width: `${parseInt(100 / array.length)}%`
+        }
+        console.log(123, style)
+        return (
+          <div className='fielditem' style={style} key={item.id}>
+            <div className='rate'>
+              <i>{item.correctRate}</i>
+              <span>%</span>
+            </div>
+            <div className='fieldname'>
+              {item.interestField && (locale === 'en' ? item.interestField.name_en : item.interestField.name_zh)}
+            </div>
+          </div>
+        )
+      })
+    )
   }
   render () {
     const {
       intl: { formatMessage, locale },
       location: { pathname },
-      count,
-      result
+      count
     } = this.props
-    let { sortedInfo, filteredInfo, loading, currentPage, currentStep, resultList, selectList, toStart } = this.state
+    let { currentStep, result } = this.state
 
     return (
       <div className='resultfile'>
         <NavBar
           mode='light'
-          // icon={<Icon type='left' />}
-          // onLeftClick={() => console.log('onLeftClick')}
-          // rightContent={[
-          //   <Icon key='0' type='search' style={{ marginRight: '16px' }} />,
-          //   <Icon key='1' type='ellipsis' />
-          // ]}
+          icon={<Icon onClick={() => console.log('back')} type='left' />}
+          leftContent={<span>{formatMessage({ id: 'backToApp' })}</span>}
+          onLeftClick={() => {
+            this.backToApp()
+          }}
         >
-          <span>{formatMessage({ id: 'appTitle' })}</span>
+          <span>{formatMessage({ id: 'resultTitle' })}</span>
         </NavBar>
         <div>
           <Steps current={currentStep} direction='horizontal' size='small'>
@@ -132,56 +162,66 @@ class Result extends React.Component {
             <Step icon={<div className={'icon_step' + (currentStep > 1 ? ' current' : '')}>3</div>} />
           </Steps>
         </div>
-        {!toStart && (
-          <div>
-            <div className='container'>
-              <div className='title'>
-                <div>{formatMessage({ id: 'plxselectfild' })}</div>
-                <span>{formatMessage({ id: 'plxselectlessthen3' })}</span>
+        <div
+          style={{
+            overflow: 'hidden',
+            height: '0.45rem'
+          }}
+        >
+          <div className='huxian'>
+            <div className='scoreandtitle'>
+              <div className='title'>{formatMessage({ id: 'congratulation' })}</div>
+              <div className='time'>
+                {formatMessage({ id: 'testingtime' })} {formatSecondToMinute(result.get('testingtime'))}
               </div>
-              {/* <ResultList
-                dataSource={resultList}
-                {...this.props}
-                selectList={selectList}
-                onItemChange={this.onItemChange}
-              /> */}
-            </div>
-            <div className={'bottomButton' + (!selectList.length ? ' disabled' : '')}>
-              <Button type='primary' disabled={!selectList.length} onClick={() => this.setState({ toStart: true })}>
-                {formatMessage({ id: 'nextStep' })}
-              </Button>
+              <div className='title_'>
+                <span className='score'>{result.get('allCorrectRate')}</span>
+                <span>{formatMessage({ id: 'score' })}</span>
+              </div>
             </div>
           </div>
-        )}
-        {toStart && (
-          <div>
-            <div className='container'>
-              <div className='title'>
-                <div>{formatMessage({ id: 'testforresult' })}</div>
-                <span>{formatMessage({ id: 'testtips' })}</span>
-              </div>
-              <div className='littletitle'>
-                <div style={{ marginRight: '0.05rem', lineHeight: '0.08rem' }}>
-                  {formatMessage({ id: 'youselectresult' })}
-                  {':'}
-                </div>
-                <div>
-                  {selectList.map(item => (
-                    <span key={item.id} className='youselectitem'>
-                      {locale === 'en' ? item.name_en : item.name_zh}
-                    </span>
-                  ))}
-                </div>
-                <div className='testcontent'>{formatMessage({ id: 'testcontent' })}</div>
-              </div>
+        </div>
+        <div className='container'>
+          <div className='correctanderror'>
+            <div>
+              <i className='iconfont correct'>&#xe744;</i>
+              <span>{result.get('correctsize')}</span>
+              {formatMessage({ id: 'question' })}
             </div>
-            <div className={'bottomButton nofull'}>
-              <Button type='primary' onClick={() => this.jump()}>
-                {formatMessage({ id: 'startTest' })}
-              </Button>
+            <div>|</div>
+            <div>
+              <i className='iconfont error'>&#xe7ca;</i>
+              <span>{result.get('errorsize')}</span>
+              {formatMessage({ id: 'question' })}
             </div>
           </div>
-        )}
+          <div className='correctRate'>
+            <span>{formatMessage({ id: 'correctRate' })}</span>
+            <span>
+              {result.get('allCorrectRate')}
+              {'%'}
+            </span>
+          </div>
+          <div className='ratewithfield'>{this.renderfield()}</div>
+          <div className='introduction'>
+            <p>{formatMessage({ id: 'testintroduction1' })}</p>
+            <p>{formatMessage({ id: 'testintroduction2' })}</p>
+          </div>
+        </div>
+        <div className={'bottomButton nofull'}>
+          <Button
+            type='primary'
+            onClick={() => {
+              if (window.originalPostMessage) {
+                window.postMessage(100)
+              } else {
+                throw Error('postMessage接口还未注入')
+              }
+            }}
+          >
+            {formatMessage({ id: 'recommendcourse' })}
+          </Button>
+        </div>
       </div>
     )
   }

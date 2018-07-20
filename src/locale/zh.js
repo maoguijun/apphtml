@@ -37,7 +37,16 @@ const language = {
   questionbackAlertmessage2: `距离获得定制课程推荐只有一步了，
   您确定要现在退出吗！
   `,
-  questionbackAlertmessage2tip: '（下次进行测试时可以看到前一次成绩）'
+  questionbackAlertmessage2tip: '（下次进行测试时可以看到前一次成绩）',
+  resultTitle: '测试结果',
+  congratulation: '恭喜你完成测试',
+  score: '分',
+  testingtime: '测试时长',
+  question: '题',
+  correctRate: '测试准确率',
+  testintroduction1: '1.每道题分值相同，满分100分，以最后获得的总分给用户推荐该领域的课程',
+  testintroduction2: '2.每道题不同分值，满分100分，以最后获得的总分给用户推荐该领域的课程',
+  recommendcourse: '浏览课程推荐'
 }
 
 export default language

@@ -2,7 +2,7 @@
   font-family: PingFangSC-Medium;
   .am-navbar-light {
     background: #dec7a9;
-    padding-top: 0.05rem;
+    padding-top: 0.046rem;
     padding-bottom: 0.04rem;
     span {
       font-size: 0.05;
@@ -65,6 +65,7 @@
 
   // 内容
   .container {
+    margin-bottom:0.15rem;
     .title {
       margin-left: 0.03rem;
       width: 0.91rem;

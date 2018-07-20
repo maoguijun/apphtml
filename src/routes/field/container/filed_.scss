@@ -3,7 +3,7 @@
   .am-navbar-light {
     background: #dec7a9;
     padding-top: 0.05rem;
-    padding-bottom: 0.04rem;
+    padding-bottom: 0.046rem;
     span {
       font-size: 0.05;
       line-height: 0.04;
@@ -35,6 +35,7 @@
 
   // 内容
   .container {
+    margin-bottom: 0.15rem;
     .title {
       text-align: center;
       margin-top: 0.1rem;
