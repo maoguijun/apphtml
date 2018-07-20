@@ -2,7 +2,7 @@
  * @Author: Mao Guijun
  * @Date: 2018-07-18 11:30:06
  * @Last Modified by: Mao Guijun
- * @Last Modified time: 2018-07-20 15:02:31
+ * @Last Modified time: 2018-07-20 15:52:52
  */
 import React, { PureComponent } from 'react'
 import { injectIntl } from 'react-intl'
@@ -21,7 +21,7 @@ import { fetchResult } from '../modules/result'
 import { NavBar, Icon, Steps, WingBlank, WhiteSpace, Toast, Modal, Button } from 'antd-mobile'
 import './result_.scss'
 import { login } from '../../Login/modules/login'
-import { encryptAes, encryptSha256, formatSecondToMinute } from '../../../utils/common'
+import { encryptAes, encryptSha256, formatSecondToMinute, toFixed } from '../../../utils/common'
 // import ResultList from './components/resultlist'
 const Step = Steps.Step
 const alert = Modal.alert
@@ -185,13 +185,13 @@ class Result extends React.Component {
           <div className='correctanderror'>
             <div>
               <i className='iconfont correct'>&#xe744;</i>
-              <span>{result.get('correctsize')}</span>
+              <span>{toFixed(result.get('correctsize'), 2)}</span>
               {formatMessage({ id: 'question' })}
             </div>
             <div>|</div>
             <div>
               <i className='iconfont error'>&#xe7ca;</i>
-              <span>{result.get('errorsize')}</span>
+              <span>{toFixed(result.get('errorsize'), 2)}</span>
               {formatMessage({ id: 'question' })}
             </div>
           </div>

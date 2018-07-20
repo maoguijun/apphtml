@@ -35,10 +35,31 @@ export const formatSecondToMinute = value => {
     return '00:00'
   }
   arr = arr.map(i => {
-    if (i < 10) {
-      i = `0${i}`
-    }
-    return `${i}`
+    // if (i < 10) {
+    //   i = `0${i}`
+    // }
+    // return `${i}`
+    return toFixed(i, 2)
   })
   return arr.join(':')
+}
+/**
+ * 将数字格式化成固定的位数
+ * num:原数字,int
+ * d:需要固定的位数，int
+ */
+
+export const toFixed = (num, d) => {
+  if (num === undefined || d === undefined || !/^\d$/.test(num + '') || !/^\d$/.test(d + '')) {
+    return num
+  }
+  let arr = (num + '').split('')
+  let count = d - arr.length
+  if (count < 0) {
+    count = 0
+  }
+  for (let i = 0; i < count; i++) {
+    arr.unshift('0')
+  }
+  return arr.join('')
 }
