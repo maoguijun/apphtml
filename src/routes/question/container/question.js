@@ -2,7 +2,7 @@
  * @Author: Mao Guijun
  * @Date: 2018-07-18 11:30:06
  * @Last Modified by: Mao Guijun
- * @Last Modified time: 2018-07-20 14:07:36
+ * @Last Modified time: 2018-07-20 22:12:00
  */
 import React, { PureComponent } from 'react'
 import { injectIntl } from 'react-intl'
@@ -11,7 +11,18 @@ import { pathJump } from '../../../utils/'
 import { titles as _tit, rootPath, tableAll, locale, timetest } from '../../../config'
 import Immutable from 'immutable'
 import { fetchQuestion, newResult } from '../modules/question'
-import { NavBar, Icon, Steps, WingBlank, WhiteSpace, Toast, Modal, Button, Checkbox } from 'antd-mobile'
+import {
+  NavBar,
+  Icon,
+  Steps,
+  WingBlank,
+  ActivityIndicator,
+  WhiteSpace,
+  Toast,
+  Modal,
+  Button,
+  Checkbox
+} from 'antd-mobile'
 import './question_.scss'
 import { login } from '../../Login/modules/login'
 import { encryptAes, encryptSha256, formatSecondToMinute } from '../../../utils/common'
@@ -30,7 +41,8 @@ class Question extends React.Component {
       correctList: Immutable.fromJS([]), // 正确的题目
       errorList: Immutable.fromJS([]), // 错误的题目
       Indexquestion: 0, // 当前显示的题目的index
-      timerest: timetest
+      timerest: timetest,
+      animating: true
     }
   }
 
@@ -64,7 +76,8 @@ class Question extends React.Component {
       }
       console.log(57, e)
       this.setState({
-        questionList: Immutable.fromJS(e.payload.objs)
+        questionList: Immutable.fromJS(e.payload.objs),
+        animating: false
       })
     })
     this.time = setInterval(() => {
@@ -295,10 +308,11 @@ class Question extends React.Component {
       count,
       question
     } = this.props
-    let { currentStep, Indexquestion, questionList, correctList, errorList, timerest } = this.state
+    let { currentStep, Indexquestion, questionList, correctList, animating, errorList, timerest } = this.state
 
     return (
       <div className='questionfile'>
+        <ActivityIndicator toast text='Loading...' animating={animating} />
         <NavBar
           mode='light'
           icon={<Icon onClick={() => console.log('back')} type='left' />}

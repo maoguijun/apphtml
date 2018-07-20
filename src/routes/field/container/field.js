@@ -2,7 +2,7 @@
  * @Author: Mao Guijun
  * @Date: 2018-07-18 11:30:06
  * @Last Modified by: Mao Guijun
- * @Last Modified time: 2018-07-20 15:30:23
+ * @Last Modified time: 2018-07-20 22:09:32
  */
 import React, { PureComponent } from 'react'
 import { injectIntl } from 'react-intl'
@@ -18,7 +18,7 @@ import {
 } from '../../../config'
 import Immutable from 'immutable'
 import { fetchField } from '../modules/field'
-import { NavBar, Icon, Steps, WingBlank, WhiteSpace, Toast, Modal, Button } from 'antd-mobile'
+import { NavBar, Icon, Steps, WingBlank, WhiteSpace, ActivityIndicator, Toast, Modal, Button } from 'antd-mobile'
 import './filed_.scss'
 import { login } from '../../Login/modules/login'
 import { encryptAes, encryptSha256 } from '../../../utils/common'
@@ -33,7 +33,8 @@ class Field extends React.Component {
       currentStep: 0,
       fieldList: [],
       selectList: [],
-      toStart: false // 是否点了下一步
+      toStart: false, // 是否点了下一步,
+      animating: true
     }
   }
 
@@ -59,7 +60,8 @@ class Field extends React.Component {
       }
       console.log(57, e)
       this.setState({
-        fieldList: e.payload.objs
+        fieldList: e.payload.objs,
+        animating: false
       })
     })
   }
@@ -135,10 +137,21 @@ class Field extends React.Component {
       count,
       field
     } = this.props
-    let { sortedInfo, filteredInfo, loading, currentPage, currentStep, fieldList, selectList, toStart } = this.state
+    let {
+      sortedInfo,
+      filteredInfo,
+      loading,
+      currentPage,
+      currentStep,
+      fieldList,
+      selectList,
+      toStart,
+      animating
+    } = this.state
 
     return (
       <div className='fieldfile'>
+        <ActivityIndicator toast text='Loading...' animating={animating} />
         <NavBar
           mode='light'
           icon={<Icon onClick={() => console.log('back')} type='left' />}
