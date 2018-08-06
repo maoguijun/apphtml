@@ -2,7 +2,7 @@
  * @Author: Mao Guijun
  * @Date: 2018-07-18 11:30:06
  * @Last Modified by: Mao Guijun
- * @Last Modified time: 2018-07-20 22:12:00
+ * @Last Modified time: 2018-07-31 17:35:16
  */
 import React, { PureComponent } from 'react'
 import { injectIntl } from 'react-intl'
@@ -387,34 +387,16 @@ class Question extends React.Component {
               {questionList.getIn([`${Indexquestion}`, 'choQueOptions']) &&
                 questionList.getIn([`${Indexquestion}`, 'choQueOptions']).map(item => {
                   const status = this.getStatus(item)
+                  const isSelected = questionList.getIn([`${Indexquestion}`, 'isSelected'])
                   return (
                     <div
                       className={'questionItem' + ' ' + status}
+                      style={isSelected ? { background: '#fff' } : {}}
                       key={item.get('id')}
                       onTouchStart={e => {
                         this.onChange(item.get('id'))
                       }}
                     >
-                      {/* {!questionList.getIn([`${Indexquestion}`, 'isSelected']) && (
-                        <div className='checkbox'>
-                          {item.get('userselect') ? <i className='iconfont'>&#xe744;</i> : <i>{''}</i>}
-                          <span>{item.get('name')}</span>
-                        </div>
-                      )}
-                      {questionList.getIn([`${Indexquestion}`, 'isSelected']) && (
-                        <div className='checkbox'>
-                          {item.get('answer') ? (
-                            !!item.get('answer') === item.get('userselect') ? (
-                              <i className='iconfont'>&#xe744;</i>
-                            ) : (
-                              <i className='iconfont'>&#xe7ca;</i>
-                            )
-                          ) : (
-                            <i>{''}</i>
-                          )}
-                          <span>{item.get('name')}</span>
-                          </div>
-                        )} */}
                       {!status ? (
                         <div className='checkbox'>
                           <i>{''}</i>

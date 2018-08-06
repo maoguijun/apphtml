@@ -40,12 +40,14 @@
     .bar-item {
       float: left;
       width: 0.2rem;
+      padding:0.01rem 0;
+      box-sizing: border-box;
       div {
         box-sizing: border-box;
         text-align: center;
       }
       div:first-child {
-        height: 0.06rem;
+        height: 0.05rem;
         padding-top: 0.02rem;
         color: #34373b;
         font-size: 0.032rem;
@@ -55,7 +57,7 @@
         border-right: 1px solid #ccc;
       }
       div:last-child {
-        height: 0.06rem;
+        height: 0.05rem;
         color: #bdbdbd;
         font-size: 0.029rem;
         font-family: PingFangSC-Semibold;
