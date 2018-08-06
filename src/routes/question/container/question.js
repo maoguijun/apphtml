@@ -47,20 +47,20 @@ class Question extends React.Component {
   }
 
   // WARNING! To be deprecated in React v17. Use componentDidMount instead.
-  componentWillMount () {
-    const {
-      dispatch,
-      location: { pathname }
-    } = this.props
-    const json = {
-      mail: '1053475583@qq.com',
-      password: encryptAes(`${encryptSha256('Qwerty1.')},${new Date().getTime()}`),
-      type: '3',
-      equipmentType: '2'
-    }
-    dispatch(login(json))
-    // console.log('pathname', location)
-  }
+  // componentWillMount () {
+  //   const {
+  //     dispatch,
+  //     location: { pathname }
+  //   } = this.props
+  //   const json = {
+  //     mail: '1053475583@qq.com',
+  //     password: encryptAes(`${encryptSha256('Qwerty1.')},${new Date().getTime()}`),
+  //     type: '3',
+  //     equipmentType: '2'
+  //   }
+  //   dispatch(login(json))
+  //   // console.log('pathname', location)
+  // }
 
   componentDidMount () {
     const {

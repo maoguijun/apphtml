@@ -1,0 +1,28 @@
+<!doctype html><html lang="en"><head><title>YouPlus</title><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"><script type="text/javascript" src="https://cdn.polyfill.io/v2/polyfill.js"></script><script>(function () {
+      var currClientWidth,
+        fontValue,
+        originWidth;
+      originWidth = 375;//ui设计稿的宽度，一般750或640
+      __resize();
+
+      window.addEventListener('resize', __resize, false);
+
+      function __resize() {
+        currClientWidth = document.documentElement.clientWidth;
+        console.log(21, currClientWidth)
+        if (currClientWidth > 375) {
+          currClientWidth = 375;
+        }
+        // fontSize = (currClientWidth / originWidth).toFixed(2);
+        console.log(28, fontValue)
+        document.documentElement.style.fontSize = currClientWidth + 'px';
+      }
+    })();</script><link rel="shortcut icon" href="/favicon.ico"><link href="app.b7a41cc771767419797f877ce93eb60f.css" rel="stylesheet"></head><body><div id="root" style="height: 100%;background: #fff"></div><script>(function () {
+      var currClientHeight = document.documentElement.clientHeight
+      console.log(38, currClientHeight)
+      if (currClientHeight < 812) {
+        currClientHeight = 812
+      }
+      console.log(42, document.getElementById('root').style)
+      document.getElementById('root').style.minHeight = currClientHeight + 'px'
+    })()</script><script type="text/javascript" src="vendor.b045ea3023226f2d1742_2018_08_06_15_44.js"></script><script type="text/javascript" src="app.834a940185bb7b4c6597_2018_08_06_15_44.js"></script></body></html>

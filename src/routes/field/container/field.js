@@ -2,7 +2,7 @@
  * @Author: Mao Guijun
  * @Date: 2018-07-18 11:30:06
  * @Last Modified by: Mao Guijun
- * @Last Modified time: 2018-07-20 22:09:32
+ * @Last Modified time: 2018-08-06 14:06:41
  */
 import React, { PureComponent } from 'react'
 import { injectIntl } from 'react-intl'
@@ -40,10 +40,14 @@ class Field extends React.Component {
 
   // WARNING! To be deprecated in React v17. Use componentDidMount instead.
   componentWillMount () {
-    const { dispatch } = this.props
+    const {
+      dispatch,
+      location: { search }
+    } = this.props
+    console.log(search)
     const json = {
       mail: '1053475583@qq.com',
-      password: encryptAes(`${encryptSha256('Qwerty1.')},${new Date().getTime()}`),
+      password: encryptAes(`${encryptSha256('Qwerty3.')},${new Date().getTime()}`),
       type: '3',
       equipmentType: '2'
     }
