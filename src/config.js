@@ -15,7 +15,8 @@ exports.fetchState = {
   success: 'success'
 }
 
-export const secondRouter = process.env.NODE_ENV === 'development' ? '' : '/teacher'
+// export const secondRouter = process.env.NODE_ENV === 'development' ? '' : '/teacher'
+// export const secondRouter = process.env.NODE_ENV === 'development' ? '' : '/teacher'
 
 let _rootPath = {
   base: '/',
@@ -49,9 +50,9 @@ export let titles = {
   question: 'question',
   courseType: 'courseType'
 }
-for (let key in titles) {
-  titles[key] = `title_${titles[key]}`
-}
+// for (let key in titles) {
+//   titles[key] = `title_${titles[key]}`
+// }
 
 exports.quizReplyStatus = {
   reply: 1, // 回复
