@@ -32,9 +32,9 @@ let _rootPath = {
   result: '/result'
 }
 
-for (let k in _rootPath) {
-  _rootPath[k] = secondRouter + _rootPath[k]
-}
+// for (let k in _rootPath) {
+//   _rootPath[k] = secondRouter + _rootPath[k]
+// }
 
 exports.rootPath = _rootPath
 
@@ -50,9 +50,9 @@ export let titles = {
   question: 'question',
   courseType: 'courseType'
 }
-// for (let key in titles) {
-//   titles[key] = `title_${titles[key]}`
-// }
+for (let key in titles) {
+  titles[key] = `title_${titles[key]}`
+}
 
 exports.quizReplyStatus = {
   reply: 1, // 回复
