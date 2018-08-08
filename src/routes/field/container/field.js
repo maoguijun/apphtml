@@ -2,7 +2,7 @@
  * @Author: Mao Guijun
  * @Date: 2018-07-18 11:30:06
  * @Last Modified by: Mao Guijun
- * @Last Modified time: 2018-08-08 15:16:36
+ * @Last Modified time: 2018-08-08 16:02:27
  */
 import React, { PureComponent } from 'react'
 import { injectIntl } from 'react-intl'
@@ -55,16 +55,31 @@ class Field extends React.Component {
   // }
 
   componentDidMount () {
-    const { dispatch } = this.props
-    dispatch(fetchField({ limit: tableAll })).then(e => {
+    const {
+      dispatch,
+      intl: { formatMessage }
+    } = this.props
+    const studentId = sessionStorage.getItem('userid')
+    if (!studentId) {
+      this.setState({ animating: false })
+      alert(formatMessage({ id: 'plxlogin' }), '', [
+        { text: 'Cancel', onPress: () => console.log('cancel') },
+        { text: 'Ok', onPress: () => console.log('ok') }
+      ])
+      return
+    }
+    const json = {
+      limit: tableAll,
+      studentId
+    }
+    dispatch(fetchField(json)).then(e => {
+      this.setState({ animating: false })
       if (e.error) {
-        console.log(e.error)
         return
       }
       console.log(57, e)
       this.setState({
-        fieldList: e.payload.objs,
-        animating: false
+        fieldList: e.payload.objs
       })
     })
   }

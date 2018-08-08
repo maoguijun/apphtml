@@ -2,6 +2,7 @@ import { quiz_tableField as _quiz, personalCenter_info as _perT, homework_tableF
 
 const language = {
   //  global
+  plxlogin: 'please sign in',
   input_require: 'Please input your {name}',
   input_placeholder: '{name}',
   locale: '中文',
@@ -69,9 +70,9 @@ const language = {
   expandSearch: 'Advance Search',
   search: 'Search',
   clear: 'Clear',
-  homework_Status:'Homework Status',
-  qStudent:'Student',
-  quiz_Status:'Status',
+  homework_Status: 'Homework Status',
+  qStudent: 'Student',
+  quiz_Status: 'Status',
   // sider
 
   quiz: 'Quiz',

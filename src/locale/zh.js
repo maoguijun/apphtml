@@ -1,6 +1,7 @@
 import { quiz_tableField as _quiz, personalCenter_info as _perT, homework_tableField as _homeT } from '../config'
 
 const language = {
+  plxlogin: '请登录',
   appTitle: 'You Plus 定制课程',
   plxselectfild: '请选择课程领域',
   plxselectlessthen3: '最多选择3个领域进行测试',

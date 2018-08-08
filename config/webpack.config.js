@@ -98,8 +98,8 @@ if (__DEV__) {
       compress: {
         unused: true,
         dead_code: true,
-        warnings: false
-        // drop_console : true,
+        warnings: false,
+        drop_console: true
       }
     }),
     new webpack.optimize.AggressiveMergingPlugin()
