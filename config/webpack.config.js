@@ -44,7 +44,7 @@ webpackConfig.entry = {
 webpackConfig.output = {
   filename: `[name].[${project.compiler_hash_type}]_${moment().format('YYYY_MM_DD_HH_mm')}.js`,
   path: project.paths.dist(),
-  publicPath: project.compiler_public_path
+  publicPath: '/fieldExam/'
 }
 
 // ------------------------------------

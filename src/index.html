@@ -28,20 +28,29 @@
       }
     })();
   </script>
+  <script>
+    (function () {
+      try {
+        sessionStorage.setItem('userid', window.location.search.slice(1))
+      } catch (error) {
+        console.log(err.message)
+      }
+    })()
+  </script>
 </head>
 
 <body>
   <div id="root" style="height: 100%;background: #fff"></div>
   <script>
-    (function () {
-      var currClientHeight = document.documentElement.clientHeight
-      console.log(38, currClientHeight)
-      if (currClientHeight < 812) {
-        currClientHeight = 812
-      }
-      console.log(42, document.getElementById('root').style)
-      document.getElementById('root').style.minHeight = currClientHeight + 'px'
-    })()
+      (function () {
+        var currClientHeight = document.documentElement.clientHeight
+        console.log(38, currClientHeight)
+        if (currClientHeight < 812) {
+          currClientHeight = 812
+        }
+        console.log(42, document.getElementById('root').style)
+        document.getElementById('root').style.minHeight = currClientHeight + 'px'
+      })()
   </script>
 </body>
 

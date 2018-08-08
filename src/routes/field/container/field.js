@@ -2,7 +2,7 @@
  * @Author: Mao Guijun
  * @Date: 2018-07-18 11:30:06
  * @Last Modified by: Mao Guijun
- * @Last Modified time: 2018-08-06 14:06:41
+ * @Last Modified time: 2018-08-08 15:16:36
  */
 import React, { PureComponent } from 'react'
 import { injectIntl } from 'react-intl'
@@ -39,27 +39,26 @@ class Field extends React.Component {
   }
 
   // WARNING! To be deprecated in React v17. Use componentDidMount instead.
-  componentWillMount () {
-    const {
-      dispatch,
-      location: { search }
-    } = this.props
-    console.log(search)
-    const json = {
-      mail: '1053475583@qq.com',
-      password: encryptAes(`${encryptSha256('Qwerty3.')},${new Date().getTime()}`),
-      type: '3',
-      equipmentType: '2'
-    }
-    dispatch(login(json))
-  }
+  // componentWillMount () {
+  //   const {
+  //     dispatch,
+  //     location: { search }
+  //   } = this.props
+  //   console.log(search)
+  //   const json = {
+  //     mail: '1053475583@qq.com',
+  //     password: encryptAes(`${encryptSha256('Qwerty3.')},${new Date().getTime()}`),
+  //     type: '3',
+  //     equipmentType: '1'
+  //   }
+  //   dispatch(login(json))
+  // }
 
   componentDidMount () {
     const { dispatch } = this.props
     dispatch(fetchField({ limit: tableAll })).then(e => {
       if (e.error) {
         console.log(e.error)
-        // Toast.info(e.error, 1)
         return
       }
       console.log(57, e)

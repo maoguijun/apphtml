@@ -17,12 +17,18 @@
         console.log(28, fontValue)
         document.documentElement.style.fontSize = currClientWidth + 'px';
       }
-    })();</script><link rel="shortcut icon" href="/favicon.ico"><link href="/app.b7a41cc771767419797f877ce93eb60f.css" rel="stylesheet"></head><body><div id="root" style="height: 100%;background: #fff"></div><script>(function () {
-      var currClientHeight = document.documentElement.clientHeight
-      console.log(38, currClientHeight)
-      if (currClientHeight < 812) {
-        currClientHeight = 812
+    })();</script><script>(function () {
+      try {
+        sessionStorage.setItem('userid', window.location.search.slice(1))
+      } catch (error) {
+        console.log(err.message)
       }
-      console.log(42, document.getElementById('root').style)
-      document.getElementById('root').style.minHeight = currClientHeight + 'px'
-    })()</script><script type="text/javascript" src="/vendor.98f620b9aa396df51ec0_2018_08_06_17_13.js"></script><script type="text/javascript" src="/app.a3554006765b7c8b40a8_2018_08_06_17_13.js"></script></body></html>
+    })()</script><link rel="shortcut icon" href="/fieldExam/favicon.ico"><link href="/fieldExam/app.0e38354d3f869feec46cbd4d981e8c32.css" rel="stylesheet"></head><body><div id="root" style="height: 100%;background: #fff"></div><script>(function () {
+        var currClientHeight = document.documentElement.clientHeight
+        console.log(38, currClientHeight)
+        if (currClientHeight < 812) {
+          currClientHeight = 812
+        }
+        console.log(42, document.getElementById('root').style)
+        document.getElementById('root').style.minHeight = currClientHeight + 'px'
+      })()</script><script type="text/javascript" src="/fieldExam/vendor.8e0e55c1ef990abdc0bd_2018_08_08_15_17.js"></script><script type="text/javascript" src="/fieldExam/app.33db937f539a5202817a_2018_08_08_15_17.js"></script></body></html>

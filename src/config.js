@@ -9,7 +9,7 @@ export const picURL = '//ossyoupluselearning.businesstrainingshpwc.cn/' // 线�
 export const tableLimit = 20
 export const tableAll = 99999
 export const timetest = 600 // 测试时长
-exports.host = '/api'
+exports.host = '//youplusadmintest.loncus.com/api'
 exports.serverurl = '/api'
 exports.fetchState = {
   success: 'success'
@@ -19,7 +19,7 @@ exports.fetchState = {
 // export const secondRouter = process.env.NODE_ENV === 'development' ? '' : '/teacher'
 
 let _rootPath = {
-  base: '/',
+  base: '/index.html',
   quiz: '/quiz',
   homework: '/homework',
   personCenter: '/personCenter',
@@ -32,9 +32,9 @@ let _rootPath = {
   result: '/result'
 }
 
-// for (let k in _rootPath) {
-//   _rootPath[k] = secondRouter + _rootPath[k]
-// }
+for (let k in _rootPath) {
+  _rootPath[k] = '/fieldExam' + _rootPath[k]
+}
 
 exports.rootPath = _rootPath
 
