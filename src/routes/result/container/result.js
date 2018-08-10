@@ -2,7 +2,7 @@
  * @Author: Mao Guijun
  * @Date: 2018-07-18 11:30:06
  * @Last Modified by: Mao Guijun
- * @Last Modified time: 2018-07-20 15:52:52
+ * @Last Modified time: 2018-08-10 15:20:56
  */
 import React, { PureComponent } from 'react'
 import { injectIntl } from 'react-intl'
@@ -14,7 +14,8 @@ import {
   result_tableResult as _result,
   resultReplyStatus,
   rootPath,
-  tableAll
+  tableAll,
+  resultRouter
 } from '../../../config'
 import Immutable from 'immutable'
 import { fetchResult } from '../modules/result'
@@ -23,6 +24,7 @@ import './result_.scss'
 import { login } from '../../Login/modules/login'
 import { encryptAes, encryptSha256, formatSecondToMinute, toFixed } from '../../../utils/common'
 // import ResultList from './components/resultlist'
+import { postMessage } from '../../../utils/onmessage'
 const Step = Steps.Step
 const alert = Modal.alert
 
@@ -77,6 +79,9 @@ class Result extends React.Component {
     const {
       intl: { formatMessage }
     } = this.props
+    this.setState({
+      animating: false
+    })
     setTimeout(
       () =>
         alert(
@@ -86,11 +91,7 @@ class Result extends React.Component {
             {
               text: formatMessage({ id: 'saveandleave' }),
               onPress: e => {
-                if (window.originalPostMessage) {
-                  window.postMessage(100)
-                } else {
-                  throw Error('postMessage接口还未注入')
-                }
+                postMessage()
               }
             },
             {
@@ -212,11 +213,7 @@ class Result extends React.Component {
           <Button
             type='primary'
             onClick={() => {
-              if (window.originalPostMessage) {
-                window.postMessage(100)
-              } else {
-                throw Error('postMessage接口还未注入')
-              }
+              postMessage(resultRouter)
             }}
           >
             {formatMessage({ id: 'recommendcourse' })}

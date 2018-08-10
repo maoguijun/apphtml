@@ -2,7 +2,7 @@
  * @Author: Mao Guijun
  * @Date: 2018-07-18 11:30:06
  * @Last Modified by: Mao Guijun
- * @Last Modified time: 2018-08-08 16:02:27
+ * @Last Modified time: 2018-08-10 15:13:55
  */
 import React, { PureComponent } from 'react'
 import { injectIntl } from 'react-intl'
@@ -23,6 +23,8 @@ import './filed_.scss'
 import { login } from '../../Login/modules/login'
 import { encryptAes, encryptSha256 } from '../../../utils/common'
 import FieldList from './components/fieldlist'
+import { postMessage } from '../../../utils/onmessage'
+
 const Step = Steps.Step
 const alert = Modal.alert
 
@@ -33,8 +35,7 @@ class Field extends React.Component {
       currentStep: 0,
       fieldList: [],
       selectList: [],
-      toStart: false, // 是否点了下一步,
-      animating: true
+      toStart: false // 是否点了下一步,
     }
   }
 
@@ -63,8 +64,8 @@ class Field extends React.Component {
     if (!studentId) {
       this.setState({ animating: false })
       alert(formatMessage({ id: 'plxlogin' }), '', [
-        { text: 'Cancel', onPress: () => console.log('cancel') },
-        { text: 'Ok', onPress: () => console.log('ok') }
+        { text: 'Cancel', onPress: () => postMessage() },
+        { text: 'Ok', onPress: () => postMessage() }
       ])
       return
     }
@@ -129,18 +130,16 @@ class Field extends React.Component {
     const {
       intl: { formatMessage }
     } = this.props
-
+    this.setState({
+      animating: false
+    })
     setTimeout(
       () =>
         alert(formatMessage({ id: 'questionbackAlertmessage1' }), '', [
           {
             text: formatMessage({ id: 'canceltest' }),
             onPress: () => {
-              if (window.originalPostMessage) {
-                window.postMessage(100)
-              } else {
-                throw Error('postMessage接口还未注入')
-              }
+              postMessage()
             }
           },
           { text: formatMessage({ id: 'continuetest' }) }

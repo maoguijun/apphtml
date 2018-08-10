@@ -2,7 +2,7 @@
  * @Author: Mao Guijun
  * @Date: 2018-07-18 11:30:06
  * @Last Modified by: Mao Guijun
- * @Last Modified time: 2018-08-08 15:47:41
+ * @Last Modified time: 2018-08-10 15:16:37
  */
 import React, { PureComponent } from 'react'
 import { injectIntl } from 'react-intl'
@@ -28,6 +28,7 @@ import { login } from '../../Login/modules/login'
 import { encryptAes, encryptSha256, formatSecondToMinute } from '../../../utils/common'
 import * as _ from 'lodash'
 // import QuestionList from './components/questionlist'
+import { postMessage } from '../../../utils/onmessage'
 const Step = Steps.Step
 const alert = Modal.alert
 const CheckboxItem = Checkbox.CheckboxItem
@@ -241,11 +242,7 @@ class Question extends React.Component {
       }
       if (cb) {
         if (e) {
-          if (window.originalPostMessage) {
-            window.postMessage(100)
-          } else {
-            throw Error('postMessage接口还未注入')
-          }
+          postMessage()
         }
         cb()
       }
@@ -263,6 +260,9 @@ class Question extends React.Component {
     const {
       intl: { formatMessage }
     } = this.props
+    this.setState({
+      animating: false
+    })
     if (questionList.getIn([`${questionList.size - 1}`, 'isSelected'])) {
       setTimeout(
         () =>
@@ -290,11 +290,7 @@ class Question extends React.Component {
             {
               text: formatMessage({ id: 'canceltest' }),
               onPress: () => {
-                if (window.originalPostMessage) {
-                  window.postMessage(100)
-                } else {
-                  throw Error('postMessage接口还未注入')
-                }
+                postMessage()
               }
             },
             { text: formatMessage({ id: 'continuetest' }) }

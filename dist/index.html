@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><title>YouPlus</title><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"><script type="text/javascript" src="https://cdn.polyfill.io/v2/polyfill.js"></script><script>(function () {
+<!doctype html><html lang="en"><head><title>YouPlus</title><meta charset="utf-8"><meta name="viewport" content="width=device-width,viewport-fit=cover,initial-scale=1,user-scalable=no"><script type="text/javascript" src="https://cdn.polyfill.io/v2/polyfill.js"></script><script>(function () {
       var currClientWidth,
         fontValue,
         originWidth;
@@ -18,12 +18,25 @@
         document.documentElement.style.fontSize = currClientWidth + 'px';
       }
     })();</script><script>(function () {
+      const args = window.location.search.split('&')
+      console.log(34, args)
       try {
-        sessionStorage.setItem('userid', window.location.search.slice(1))
+        sessionStorage.setItem('userid', args[0].slice(1))
+        sessionStorage.setItem('locale', args[1] || 'zh')
       } catch (error) {
         console.log(err.message)
       }
-    })()</script><link rel="shortcut icon" href="/fieldExam/favicon.ico"><link href="/fieldExam/app.0e38354d3f869feec46cbd4d981e8c32.css" rel="stylesheet"></head><body><div id="root" style="height: 100%;background: #fff"></div><script>(function () {
+
+    })()</script><style>body {
+      padding-top: constant(safe-area-inset-top);
+      padding-top: env(safe-area-inset-top);
+      padding-right: constant(safe-area-inset-right);
+      padding-right: env(safe-area-inset-right);
+      padding-bottom: constant(safe-area-inset-bottom);
+      padding-bottom: env(safe-area-inset-bottom);
+      padding-left: constant(safe-area-inset-left);
+      padding-left: env(safe-area-inset-left);
+    }</style><link rel="shortcut icon" href="/fieldExam/favicon.ico"><link href="/fieldExam/app.b881e96d4fb1967dd061cb2589e25b9f.css" rel="stylesheet"></head><body><div id="root" style="height: 100%;background: #fff"></div><script>(function () {
         var currClientHeight = document.documentElement.clientHeight
         console.log(38, currClientHeight)
         if (currClientHeight < 812) {
@@ -31,4 +44,4 @@
         }
         console.log(42, document.getElementById('root').style)
         document.getElementById('root').style.minHeight = currClientHeight + 'px'
-      })()</script><script type="text/javascript" src="/fieldExam/vendor.95c508cd74a00f35a7e9_2018_08_08_16_06.js"></script><script type="text/javascript" src="/fieldExam/app.452556f9546c2712daef_2018_08_08_16_06.js"></script></body></html>
+      })()</script><script type="text/javascript" src="/fieldExam/vendor.ff74ad42b8215e56efe2_2018_08_10_16_07.js"></script><script type="text/javascript" src="/fieldExam/app.d7f5235b29f553952b7e_2018_08_10_16_07.js"></script></body></html>
