@@ -9,7 +9,7 @@ export const picURL = '//ossyoupluselearning.businesstrainingshpwc.cn/' // 线�
 export const tableLimit = 20
 export const tableAll = 99999
 export const timetest = 600 // 测试时长
-exports.host = process.env.NODE_ENV === 'development' ? '/api' : '//http://api.youplusstable.loncus.com/api'
+exports.host = process.env.NODE_ENV === 'development' ? '/api' : '//api.youplusstable.loncus.com'
 exports.serverurl = '/api'
 
 export const resultRouter = 'Page3'
