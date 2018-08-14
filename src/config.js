@@ -254,7 +254,6 @@ export const search_item = {
   'clientPoDetail.clientId': 'clientPoDetail.clientId',
   budgetType: 'budgetType',
   budgetType_in: 'budgetType_in',
-
   studentType: 'studentType',
   mail: 'mail'
 }

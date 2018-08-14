@@ -2,7 +2,7 @@
  * @Author: Mao Guijun
  * @Date: 2018-07-18 11:30:06
  * @Last Modified by: Mao Guijun
- * @Last Modified time: 2018-08-10 15:20:56
+ * @Last Modified time: 2018-08-14 14:05:09
  */
 import React, { PureComponent } from 'react'
 import { injectIntl } from 'react-intl'
@@ -213,7 +213,7 @@ class Result extends React.Component {
           <Button
             type='primary'
             onClick={() => {
-              postMessage(resultRouter)
+              postMessage(localStorage.getItem('testresult'))
             }}
           >
             {formatMessage({ id: 'recommendcourse' })}
