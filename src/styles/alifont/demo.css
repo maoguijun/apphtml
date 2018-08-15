@@ -61,7 +61,7 @@ table { border-collapse: collapse; border-spacing: 0; }
 width: 960px;
 margin: 0 auto;
 }
-.main h1{font-size:36px; color:#333; text-align:left;margin-bottom:30px; border-bottom: 1px solid #eee;}
+.main h1{font-size:36px; color:#333; text-align:left;margin-bottom:30px; border-bottom: 1px solid #ccc;}
 
 .helps{margin-top:40px;}
 .helps pre{
@@ -206,7 +206,7 @@ margin: 0 auto;
 .markdown code {
   margin: 0 3px;
   padding: 0 5px;
-  background: #eee;
+  background: #ccc;
   border-radius: 3px;
 }
 

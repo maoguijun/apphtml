@@ -5,7 +5,7 @@ export default StyleSheet.create({
     'fontFamily': 'PingFangSC-Medium'
   },
   'resultfile am-navbar-light': {
-    'background': '#dec7a9',
+    'background': '#d1c7a9',
     'paddingTop': [{ 'unit': 'rem', 'value': 0.05 }],
     'paddingBottom': [{ 'unit': 'rem', 'value': 0.04 }]
   },
@@ -16,7 +16,7 @@ export default StyleSheet.create({
     'letterSpacing': [{ 'unit': 'px', 'value': 0 }]
   },
   'resultfile am-steps': {
-    'background': '#dec7a9',
+    'background': '#d1c7a9',
     'paddingTop': [{ 'unit': 'rem', 'value': 0.03 }],
     'paddingBottom': [{ 'unit': 'rem', 'value': 0.02 }]
   },

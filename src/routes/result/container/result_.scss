@@ -1,11 +1,12 @@
 .resultfile {
   font-family: PingFangSC-Medium;
-  // min-height:812px;
   .am-navbar-light {
     z-index: 10;
     background: #dec7a9;
     padding-top: 0.05rem;
     padding-bottom: 0.04rem;
+    padding-top: calc(0.1rem + constant(safe-area-inset-top));
+    padding-top: calc(0.1rem + env(safe-area-inset-top));
     span {
       font-size: 0.046;
       line-height: 0.04;
@@ -208,6 +209,8 @@
     width: 100%;
     transition: all 0.3s;
     z-index: 10;
+    padding-bottom: calc(0.01rem + constant(safe-area-inset-bottom));
+    padding-bottom: calc(0.01rem + env(safe-area-inset-bottom));
     font-size: 0.045rem;
     font-weight: normal;
     font-stretch: normal;
@@ -222,7 +225,7 @@
     }
   }
   .disabled {
-    bottom: -0.15rem;
+    bottom: -0.23rem;
     transition: all 0.4s;
   }
 }
