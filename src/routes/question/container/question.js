@@ -2,7 +2,7 @@
  * @Author: Mao Guijun
  * @Date: 2018-07-18 11:30:06
  * @Last Modified by: Mao Guijun
- * @Last Modified time: 2018-08-10 15:16:37
+ * @Last Modified time: 2018-08-16 14:00:11
  */
 import React, { PureComponent } from 'react'
 import { injectIntl } from 'react-intl'
@@ -223,7 +223,8 @@ class Question extends React.Component {
       })
     })
     const json = {
-      stuInterestFields: arr
+      stuInterestFields: arr,
+      studentId
     }
     session = {
       ...session,

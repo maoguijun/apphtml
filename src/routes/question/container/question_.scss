@@ -86,6 +86,8 @@
       letter-spacing: 0rem;
       color: #ccc;
       margin-top: 0.092rem;
+      padding-bottom: calc(0.01rem + constant(safe-area-inset-bottom));
+      padding-bottom: calc(0.01rem + env(safe-area-inset-bottom));
     }
     .questionTitle {
       margin-left: 0.03rem;
