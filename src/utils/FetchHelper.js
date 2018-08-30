@@ -3,6 +3,7 @@ import * as qs from 'querystring'
 import 'isomorphic-fetch'
 import { FetchGetCache } from './cache'
 import { formatLang } from './index'
+import errorMessage from './errormessage'
 
 // 判断浏览器
 function IEVersion () {
@@ -48,6 +49,7 @@ export function parseJSON (response) {
   // response.url 是否是err
   if (response.url.indexOf('error/failed') > -1) {
     return {
+      code: 6,
       msg: '您的登录邮箱或密码输入有误，请重试',
       status: 'failed'
     }
@@ -57,11 +59,13 @@ export function parseJSON (response) {
 }
 
 export function checkRsponseStatus (response) {
+  console.log(30, response)
   if (response.status !== 'success') {
     // (response.status < 200 || response.status > 300)
-    let error = new Error(response.msg, response.code, response.flag)
+    let mes = errorMessage.zh[response.code] === response.msg ? errorMessage[getlocale()][response.code] : response.msg
+    let error = new Error(response.code, response.flag, response.msg)
     error.code = response.code
-    error.message = response.msg
+    error.message = mes
     throw error
   }
   return response
