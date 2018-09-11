@@ -2,7 +2,7 @@
  * @Author: Mao Guijun
  * @Date: 2018-07-18 11:30:06
  * @Last Modified by: Mao Guijun
- * @Last Modified time: 2018-09-11 12:06:04
+ * @Last Modified time: 2018-09-11 14:58:46
  */
 import React, { PureComponent } from 'react'
 import { injectIntl } from 'react-intl'
@@ -99,13 +99,24 @@ class Question extends React.Component {
 
   componentDidUpdate (prevProps, prevState) {
     const { questionList, Indexquestion } = this.state
-    questionList.getIn([`${Indexquestion}`, 'choQueOptions']) &&
-      questionList.getIn([`${Indexquestion}`, 'choQueOptions']).forEach(item => {
-        const id = document.getElementById(`selectitem_${item.get('id')}`)
-        if (id) {
-          id.innerHTML = locale === 'en' ? item.get('options_en') : item.get('options_zh')
-        }
-      })
+    if (Indexquestion !== prevState.Indexquestion || questionList !== prevState.questionList) {
+      questionList.getIn([`${Indexquestion}`, 'choQueOptions']) &&
+        questionList.getIn([`${Indexquestion}`, 'choQueOptions']).forEach(item => {
+          const id = document.getElementById(`selectitem_${item.get('id')}`)
+          if (id) {
+            id.innerHTML = locale === 'en' ? item.get('options_en') : item.get('options_zh')
+          }
+        })
+
+      const title = document.getElementById(`questionTitle_${Indexquestion}`)
+      console.log(111, title)
+      // if (title) {
+      title.innerHTML =
+        locale === 'en'
+          ? questionList.getIn([`${Indexquestion}`, 'content_en'])
+          : questionList.getIn([`${Indexquestion}`, 'content_zh'])
+      // }
+    }
   }
 
   onChange = id => {
@@ -377,10 +388,8 @@ class Question extends React.Component {
               </span>
             </div>
             <div className='questionTitle'>
-              {Indexquestion + 1 + '. '}
-              {locale === 'en'
-                ? questionList.getIn([`${Indexquestion}`, 'content_en'])
-                : questionList.getIn([`${Indexquestion}`, 'content_zh'])}
+              <span>{Indexquestion + 1 + '. '}</span>
+              <span id={`questionTitle_${Indexquestion}`} />
             </div>
             <div className='questionSeleter'>
               {questionList.getIn([`${Indexquestion}`, 'choQueOptions']) &&
@@ -399,17 +408,17 @@ class Question extends React.Component {
                       {!status ? (
                         <div className='checkbox'>
                           <i>{''}</i>
-                          <span>{item.get('name')}</span>
+                          <span />
                         </div>
                       ) : status === 'correct' ? (
                         <div className='checkbox'>
                           <i className='iconfont'>&#xe744;</i>
-                          <span>{item.get('name')}</span>
+                          <span />
                         </div>
                       ) : (
                         <div className='checkbox'>
                           <i className='iconfont'>&#xe7ca;</i>
-                          <span>{item.get('name')}</span>
+                          <span />
                         </div>
                       )}
                       <div id={`selectitem_${item.get('id')}`} />

@@ -8,8 +8,9 @@ import { Link } from 'react-router'
 export const toFixed = (num, fractionDigits = 2) =>
   (Math.round(num * Math.pow(10, fractionDigits)) / Math.pow(10, fractionDigits)).toFixed(fractionDigits)
 
-//去掉怪异的小数
-export const fixedNumber=(num,fractionDigits=2)=>(Math.round(num * Math.pow( 10, fractionDigits  ))/Math.pow(10,fractionDigits));
+// 去掉怪异的小数
+export const fixedNumber = (num, fractionDigits = 2) =>
+  Math.round(num * Math.pow(10, fractionDigits)) / Math.pow(10, fractionDigits)
 
 // 货币格式化
 export const numberWithCommas = x => {
@@ -20,23 +21,20 @@ export const numberWithCommas = x => {
 }
 
 // 如果是小数则 fixed
-export const autoFixed=(num,fractionDigits)=>{
-  let value=fixedNumber(num)
-  if(parseInt(value)==value){
-    return value;
-  }else{
-    return toFixed(value,fractionDigits)
+export const autoFixed = (num, fractionDigits) => {
+  let value = fixedNumber(num)
+  if (parseInt(value) == value) {
+    return value
+  } else {
+    return toFixed(value, fractionDigits)
   }
 }
 
-
-
-//用户格式化输出数据
-export const format={
-  money:m=>numberWithCommas(toFixed(m/100)),
-  percent:value=>isNaN(value)?'0%':autoFixed(value*100)+'%'
+// 用户格式化输出数据
+export const format = {
+  money: m => numberWithCommas(toFixed(m / 100)),
+  percent: value => (isNaN(value) ? '0%' : autoFixed(value * 100) + '%')
 }
-
 
 exports.getToolTip = (text, showChar = 20) => {
   if (!text) return
@@ -66,40 +64,39 @@ exports.getToolTip = (text, showChar = 20) => {
   )
 }
 
-//返回数字 *100
-exports.mul100 = (v)=>{
-  let _v = parseFloat(v?v:0)
-  return mul(_v,100)
+// 返回数字 *100
+exports.mul100 = v => {
+  let _v = parseFloat(v || 0)
+  return mul(_v, 100)
 }
 
-
-export function deepCopy(p, c){
-  var c = c || {};
+export function deepCopy (p, c) {
+  var c = c || {}
   for (var i in p) {
-    if (p[i]&&typeof p[i] === 'object') {
+    if (p[i] && typeof p[i] === 'object') {
       // console.log('----',p[i])
-      c[i] = (p[i].constructor === Array) ? [] : {};
-      deepCopy(p[i], c[i]);
+      c[i] = p[i].constructor === Array ? [] : {}
+      deepCopy(p[i], c[i])
     } else {
-      c[i] = p[i];
+      c[i] = p[i]
     }
   }
-  return c;
+  return c
 }
-//返回数字 /100
-exports.div100 = (v)=>{
-  let _v = parseFloat(v?v:0)
-  return div(_v,100)
+// 返回数字 /100
+exports.div100 = v => {
+  let _v = parseFloat(v || 0)
+  return div(_v, 100)
 }
 
-//输入框格式化货币输入
-exports.formatM=(value)=>{
-  let parts = value.toString().split(".");
-  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  if(parts[1]){
-    parts[1] = parts[1].substring(0,2)
+// 输入框格式化货币输入
+exports.formatM = value => {
+  let parts = value.toString().split('.')
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  if (parts[1]) {
+    parts[1] = parts[1].substring(0, 2)
   }
-  return ` ${parts.join(".")}`;
+  return ` ${parts.join('.')}`
 }
 
 // 格式化 货币的显示方式
@@ -124,12 +121,11 @@ exports.getScrollTop = () => {
 }
 
 exports.configDirectory = (text, config, cate) => {
-    for (let v in config) {
-      if (text == v) {
-        return config[v]
-      }
+  for (let v in config) {
+    if (text == v) {
+      return config[v]
     }
-
+  }
 }
 
 exports.configCate = (text, config) => {
@@ -301,7 +297,7 @@ export function mul (a, b) {
   try {
     c += e.split('.')[1].length
   } catch (f) {}
-  return Number(d.replace('.', '')) * Number(e.replace('.', '')) / Math.pow(10, c)
+  return (Number(d.replace('.', '')) * Number(e.replace('.', ''))) / Math.pow(10, c)
 }
 
 export function div (a, b) {
