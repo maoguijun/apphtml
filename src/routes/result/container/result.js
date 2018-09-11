@@ -2,7 +2,7 @@
  * @Author: Mao Guijun
  * @Date: 2018-07-18 11:30:06
  * @Last Modified by: Mao Guijun
- * @Last Modified time: 2018-08-14 14:05:09
+ * @Last Modified time: 2018-09-11 12:07:01
  */
 import React, { PureComponent } from 'react'
 import { injectIntl } from 'react-intl'
@@ -150,6 +150,15 @@ class Result extends React.Component {
           mode='light'
           icon={<Icon onClick={() => console.log('back')} type='left' />}
           leftContent={<span>{formatMessage({ id: 'backToApp' })}</span>}
+          rightContent={
+            <span
+              onClick={() => {
+                postMessage('share_click')
+              }}
+            >
+              {formatMessage({ id: 'share' })}
+            </span>
+          }
           onLeftClick={() => {
             this.backToApp()
           }}
@@ -214,6 +223,7 @@ class Result extends React.Component {
             type='primary'
             onClick={() => {
               postMessage(localStorage.getItem('testresult'))
+              postMessage('course_recommend_page')
             }}
           >
             {formatMessage({ id: 'recommendcourse' })}

@@ -2,7 +2,7 @@
  * @Author: Mao Guijun
  * @Date: 2018-07-18 11:30:06
  * @Last Modified by: Mao Guijun
- * @Last Modified time: 2018-08-15 17:00:31
+ * @Last Modified time: 2018-09-11 12:00:20
  */
 import React, { PureComponent } from 'react'
 import { injectIntl } from 'react-intl'
@@ -122,6 +122,7 @@ class Field extends React.Component {
       }
     })
     console.log(string)
+    postMessage('begin_test_page')
     dispatch(pathJump(`${rootPath.question}?${string}`))
   }
   /** 点击离开 */

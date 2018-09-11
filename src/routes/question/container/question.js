@@ -2,7 +2,7 @@
  * @Author: Mao Guijun
  * @Date: 2018-07-18 11:30:06
  * @Last Modified by: Mao Guijun
- * @Last Modified time: 2018-08-31 18:04:27
+ * @Last Modified time: 2018-09-11 12:06:04
  */
 import React, { PureComponent } from 'react'
 import { injectIntl } from 'react-intl'
@@ -250,7 +250,10 @@ class Question extends React.Component {
   jumpToResult = () => {
     const { questionList, correctList, errorList } = this.state
     const { dispatch } = this.props
-    this.saveResult(dispatch(pathJump(rootPath.result)))
+    this.saveResult(() => {
+      postMessage('course_score_page')
+      dispatch(pathJump(rootPath.result))
+    })
   }
   /** 点击离开 */
   backToApp = () => {

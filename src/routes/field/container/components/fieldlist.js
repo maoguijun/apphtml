@@ -2,7 +2,7 @@
  * @Author: Mao Guijun
  * @Date: 2018-07-18 11:29:58
  * @Last Modified by: Mao Guijun
- * @Last Modified time: 2018-07-18 16:57:11
+ * @Last Modified time: 2018-09-11 11:39:31
  */
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
@@ -33,7 +33,8 @@ class FieldList extends Component {
     const { dataSource, selectList } = this.state
     const {
       location: { locale },
-      onItemChange
+      onItemChange,
+      intl: { formatMessage }
     } = this.props
     console.log(33, dataSource)
     return (
@@ -48,6 +49,11 @@ class FieldList extends Component {
           <Card>
             <Card.Body>
               <div>{locale === 'en' ? item.name_en : item.name_zh}</div>
+              <div className='lastscore'>
+                {item.stuInterestFields && item.stuInterestFields[0] && item.stuInterestFields[0].score
+                  ? formatMessage({ id: 'lastscore' }, { score: parseInt(item.stuInterestFields[0].score) })
+                  : formatMessage({ id: 'noscore' })}
+              </div>
             </Card.Body>
           </Card>
         </div>

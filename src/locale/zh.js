@@ -3,6 +3,8 @@ import { quiz_tableField as _quiz, personalCenter_info as _perT, homework_tableF
 const language = {
   plxlogin: '请登录',
   appTitle: 'You Plus 定制课程',
+  lastscore: '上次测试结果 {score}',
+  noscore: '无测试结果',
   plxselectfild: '请选择课程领域',
   plxselectlessthen3: '最多选择3个领域进行测试',
   fieldAlertmessage: '您最多可以同时选择3个感兴趣领域进行测试',
@@ -47,7 +49,8 @@ const language = {
   correctRate: '测试准确率',
   testintroduction1: '1.每道题分值相同，满分100分，以最后获得的总分给用户推荐该领域的课程',
   testintroduction2: '2.每道题不同分值，满分100分，以最后获得的总分给用户推荐该领域的课程',
-  recommendcourse: '浏览课程推荐'
+  recommendcourse: '浏览课程推荐',
+  share: '分享'
 }
 
 export default language
