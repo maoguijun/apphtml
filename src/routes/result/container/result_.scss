@@ -3,10 +3,10 @@
   .am-navbar-light {
     z-index: 10;
     background: #d1c7a9;
-    padding-top: 0.05rem;
+    // padding-top: 0.05rem;
     padding-bottom: 0.04rem;
-    padding-top: calc(0.1rem + constant(safe-area-inset-top));
-    padding-top: calc(0.1rem + env(safe-area-inset-top));
+    // padding-top: calc(0.1rem + constant(safe-area-inset-top));
+    // padding-top: calc(0.1rem + env(safe-area-inset-top));
     span {
       font-size: 0.046;
       line-height: 0.04;
