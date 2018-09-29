@@ -2,7 +2,7 @@
  * @Author: Mao Guijun
  * @Date: 2018-07-18 11:30:06
  * @Last Modified by: Mao Guijun
- * @Last Modified time: 2018-09-11 14:58:46
+ * @Last Modified time: 2018-09-12 19:04:00
  */
 import React, { PureComponent } from 'react'
 import { injectIntl } from 'react-intl'
@@ -110,12 +110,12 @@ class Question extends React.Component {
 
       const title = document.getElementById(`questionTitle_${Indexquestion}`)
       console.log(111, title)
-      // if (title) {
+      if (title) {
       title.innerHTML =
         locale === 'en'
           ? questionList.getIn([`${Indexquestion}`, 'content_en'])
           : questionList.getIn([`${Indexquestion}`, 'content_zh'])
-      // }
+      }
     }
   }
 

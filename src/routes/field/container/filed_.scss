@@ -2,10 +2,10 @@
   font-family: PingFangSC-Medium;
   .am-navbar-light {
     background: #d1c7a9;
-    padding-top: 0.05rem;
+    // padding-top: 0.05rem;
     padding-bottom: 0.046rem;
-    padding-top: calc(0.1rem + constant(safe-area-inset-top));
-    padding-top: calc(0.1rem + env(safe-area-inset-top));
+    // padding-top: calc(0.1rem + constant(safe-area-inset-top));
+    // padding-top: calc(0.1rem + env(safe-area-inset-top));
     span {
       font-size: 0.05;
       line-height: 0.04;
@@ -96,8 +96,8 @@
     font-size: 0.045rem;
     font-weight: normal;
     font-stretch: normal;
-    padding-bottom: calc(0.01rem + constant(safe-area-inset-bottom));
-    padding-bottom: calc(0.01rem + env(safe-area-inset-bottom));
+    // padding-bottom: calc(0.01rem + constant(safe-area-inset-bottom));
+    // padding-bottom: calc(0.01rem + env(safe-area-inset-bottom));
     .am-button {
       border-radius: 0;
     }
