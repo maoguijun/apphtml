@@ -9,7 +9,8 @@ export const picURL = '//ossyoupluselearning.businesstrainingshpwc.cn/' // 线�
 export const tableLimit = 20
 export const tableAll = 99999
 export const timetest = 600 // 测试时长
-exports.host = process.env.NODE_ENV === 'development' ? '/api' : '//api.youplusstable.loncus.com'
+// exports.host = process.env.NODE_ENV === 'development' ? '/api' : '//api.youplusstable.loncus.com' // 本地测试
+exports.host = process.env.NODE_ENV === 'development' ? '/api' : '//apiyouplustesting.businesstrainingshpwc.com' // 线上测试
 
 export const resultRouter = 'Page3'
 exports.fetchState = {
